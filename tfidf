@@ -1,0 +1,62 @@
+# CKME136 - FINAL CAPSTONE PROJECT
+# JUDGING A BOOK BY ITS COVER - TEXT ANALYSIS ON BOOK DESCRIPTIONS
+# BY ADAH MCARTHUR
+
+
+# Load required libraries
+
+library(dplyr)
+library(tm)
+library(qdap)
+library(SnowballC)
+library(RWeka)
+library(mallet)
+library(klaR)
+
+# Load dataset
+
+Blurbs <- read.csv("Locate 'Blurbs.txt' in file directory", header=TRUE, row.names="ASIN")
+
+# Cleaning Text and Creating Bag of Words
+
+blurb.w <- word_split(Blurbs$Description)
+blurb.w <- Corpus(VectorSource(blurb.w))
+blurb.w <- tm_map(blurb.w, stripWhitespace)
+blurb.w <- tm_map(blurb.w, tolower)
+blurb.w <- tm_map(blurb.w, stemDocument)
+blurb.w <- tm_map(blurb.w, removePunctuation)
+blurb.w <- tm_map(blurb.w, removeWords, stopwords("english"))
+blurb.w <- tm_map(blurb.w, PlainTextDocument)
+
+
+# Finding Frequent Terms
+
+blurb.dtm <- DocumentTermMatrix(blurb.w)
+blurb.dtm <- removeSparseTerms(blurb.dtm, 0.90)
+blurb.dtm2 <- as.matrix(blurb.dtm)
+
+blurb.tdm <- TermDocumentMatrix(blurb.w)
+blurb.tdm <- removeSparseTerms(blurb.tdm, 0.90)
+blurb.tdm2 <- as.matrix(blurb.tdm)
+
+# Word Frequency
+
+word.freq <- rowSums(blurb.tdm2)
+top.word.freq <- sort(word.freq, decreasing=TRUE)
+
+# Document Frequency
+
+doc.freq <- colSums(blurb.dtm2 > 0)
+top.doc.freq <- sort(doc.freq, decreasing=TRUE)
+
+# TF-IDF
+
+term.freq <- blurb.dtm2/colSums(blurb.dtm2) 
+
+    # (Number of times term t appears in a document) / (Total number of terms in the document)
+
+inv.doc.freq <- log(colSums(blurb.dtm2 >= 0)/colSums(blurb.dtm2 > 0))
+
+    #  log_e(Total number of documents / Number of documents with term t in it)
+
+tfidf <- term.freq*inv.doc.freq
