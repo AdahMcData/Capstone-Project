@@ -1,3 +1,2 @@
-# Capstone-Project
-# Text Analysis
+# Capstone-Project on Text Analysis
 
