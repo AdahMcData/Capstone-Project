@@ -15,7 +15,7 @@ library(klaR)
 
 # Load dataset
 
-Blurbs <- read.csv("Locate 'Blurbs.txt' in file directory", header=TRUE, row.names="ASIN")
+Blurbs <- read.csv("D:/Ryerson/CKME999/CKMT136/Data/Blurbs.txt", header=TRUE, row.names="ASIN")
 
 # Cleaning Text and Creating Bag of Words
 
@@ -51,7 +51,7 @@ top.doc.freq <- sort(doc.freq, decreasing=TRUE)
 
 # TF-IDF
 
-term.freq <- blurb.dtm2/colSums(blurb.dtm2) 
+term.freq <- blurb.dtm2/rowSums(blurb.dtm2) 
 
     # (Number of times term t appears in a document) / (Total number of terms in the document)
 
