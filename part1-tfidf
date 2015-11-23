@@ -17,6 +17,10 @@ library(klaR)
 
 Blurbs <- read.csv("D:/Ryerson/CKME999/CKMT136/Data/Blurbs.txt", header=TRUE, row.names="ASIN")
 
+# Table of Categories
+
+tally <- table("Bestsellers" = Blurbs$BestSeller, "Categories" = Blurbs$Cat)
+
 # Cleaning Text and Creating Bag of Words
 
 blurb.w <- word_split(Blurbs$Description)
