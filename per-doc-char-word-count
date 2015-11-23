@@ -1,0 +1,16 @@
+# per document word count
+
+blurb.wc <- Corpus(VectorSource(blurb.w))
+blurb.wc <- tm_map(blurb.wc,stripWhitespace)
+blurb.wc <- tm_map(blurb.wc,removePunctuation)
+blurb.wc <- DocumentTermMatrix(blurb.wc)
+blurb.wc <- as.matrix(blurb.wc)
+
+mean(rowSums(blurb.wc))
+
+# per document character count
+
+blurb.char <- Blurbs$Description
+blurb.char <- as.matrix(blurb.char)
+
+mean(nchar(blurb.char))
