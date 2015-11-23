@@ -7,7 +7,7 @@ blurb.sell <- as.data.frame(blurb.sell)
 
 # Separate Train and Test Sets
 
-rn_train <- sample(nrow(blurb.sell), floor(nrow(blurb.cat)*0.7))
+rn_train <- sample(nrow(blurb.sell), floor(nrow(blurb.sell)*0.7))
 
 train <- blurb.sell[rn_train,]
 test.lbld <- blurb.sell[-rn_train,]
