@@ -1,0 +1,26 @@
+# EXPERIMENT 1 - Category Classification
+
+# Add Class to Data Frame
+
+blurb.sell <- cbind(tfidf, Blurbs$BestSeller)
+blurb.sell <- as.data.frame(blurb.sell)
+
+# Separate Train and Test Sets
+
+rn_train <- sample(nrow(blurb.sell), floor(nrow(blurb.cat)*0.7))
+
+train <- blurb.sell[rn_train,]
+test.lbld <- blurb.sell[-rn_train,]
+test <- test.lbld[,-145]
+
+train$V145 <- as.factor(train$V145)
+
+# Implement Naive Bayes Model & Make Predictions
+
+model <- NaiveBayes(V145~., data=train)
+
+predictions <- predict(model, test)
+
+# Evaluate Model
+
+conf.mat <- table("Predictions" = predictions$class , "Actual" = test.lbld$V145)
