@@ -9,8 +9,6 @@ library(dplyr)
 library(tm)
 library(qdap)
 library(SnowballC)
-library(RWeka)
-library(mallet)
 library(klaR)
 
 # Load dataset
